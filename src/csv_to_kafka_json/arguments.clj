@@ -33,10 +33,12 @@
 
 (def cli-options
   [["-t" "--topic TOPIC" "Topic name"
-    :missing "Please provide a destination Kafka topic name"
-    :validate valid-topic-name?]
+    :missing "Destination Kafka topic name is required"
+    :validate [valid-topic-name? "Destination Kafka topic name is invalid"]]
    ["-f" "--filename FILENAME" "CSV file to send to Kafka"
-    :validate #(-> % io/as-file .exists)]
+    :missing "CSV filename is required"
+    :validate [#(-> % io/as-file .exists) "File must exist"]]
    ["-b" "--bootstrap-servers SERVERS" "Bootstrap servers to find Kafka cluster"
     :default "localhost:9092"
-    :validate valid-bootstrap-servers?]])
+    :validate [valid-bootstrap-servers? "Server list is invalid"]]
+   ["-h" "--help"]])
