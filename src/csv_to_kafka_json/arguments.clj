@@ -10,7 +10,7 @@
        (> (count string) 0)
        (not (= string "."))
        (not (= string ".."))
-       (re-seq #"[a-zA-Z0-9\\._\\-]+" string)))
+       (boolean (re-seq #"^[a-zA-Z0-9\\._\\-]+$" string))))
 
 (defn safe-parse-int [int-string]
   (try

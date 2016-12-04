@@ -3,12 +3,17 @@
             [csv-to-kafka-json.arguments :refer :all]))
 
 (deftest topic-name-validation
+  (is (false? (valid-topic-name? nil)))
+  (is (false? (valid-topic-name? "")))
   (is (true? (valid-topic-name? "wjoel")))
   (is (false? (valid-topic-name? "foo:bar")))
   (is (false? (valid-topic-name? "foo:bar")))
   (is (false? (valid-topic-name? ".")))
   (is (false? (valid-topic-name? "..")))
-  (is (true? (valid-topic-name? ".."))))
+  (is (false? (valid-topic-name? "foo./123")))
+  (is (false? (valid-topic-name? "foo123*")))
+  (is (false? (valid-topic-name? "foo123*asdf")))
+  (is (false? (valid-topic-name? "foo123#asdf"))))
 
 (deftest bootstrap-server-validation
   (is (not (true? (valid-bootstrap-server? nil))))
