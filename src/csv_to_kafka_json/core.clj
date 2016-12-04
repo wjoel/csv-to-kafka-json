@@ -2,8 +2,9 @@
   (:require [clojure.java.io :as io]
             [kinsky.client :as kc]
             [cheshire.core :as json]
-            [clojure.string :as s]
-            [clojure-csv.core :as csv])
+            [clojure-csv.core :as csv]
+            [clojure.tools.cli :refer [parse-opts]]
+            [csv-to-kafka-json.arguments :as arguments])
   (:gen-class))
 
 (defn csv-line-to-json-string [line field-names]
@@ -21,8 +22,13 @@
     (doseq [csv-line csv-lines]
       (send-csv-line-to-kafka! kafka-producer kafka-topic csv-line field-names))))
 
-(defn -main [filename]
-  (let [kafka-producer (kc/producer {:bootstrap.servers "localhost:9092"}
-                                    (kc/string-serializer)
-                                    (kc/string-serializer))]
-    (send-csv-to-kafka! kafka-producer (io/reader filename))))
+(defn -main [& args]
+  (let [{:keys [options errors summary]} (parse-opts args arguments/cli-options)]
+    (cond
+      (:help options) (arguments/print-usage summary errors)
+      errors (throw (IllegalArgumentException. (print-usage summary errors)))
+      :default (let [{:keys [bootstrap-servers topic filename]} options
+                     kafka-producer (kc/producer {:bootstrap.servers bootstrap-servers}
+                                                 (kc/string-serializer)
+                                                 (kc/string-serializer))]
+                 (send-csv-to-kafka! kafka-producer topic (io/reader filename))))))

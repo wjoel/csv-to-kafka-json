@@ -42,3 +42,16 @@
     :default "localhost:9092"
     :validate [valid-bootstrap-servers? "Server list is invalid"]]
    ["-h" "--help"]])
+
+(defn print-usage [options-summary errors]
+  (println (str/join "\n"
+                     ["Send a CSV file to Kafka as JSON messages."
+                      ""
+                      "Usage: java -jar csv-to-kafka-json.jar [arguments]"
+                      "Options:"
+                      options-summary
+                      (when errors
+                        (str/join "\n" (cons "Errors:" errors)))
+                      ""]))
+  (when errors
+    (str/join ", " errors)))
