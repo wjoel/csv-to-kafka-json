@@ -14,11 +14,13 @@ contain the names of the columns.
 
 ## Options
 
-`--bootstrap-servers`: A list of host/port pairs to connect to Kafka.
-                       See [the Kafka documentation](https://kafka.apache.org/documentation#producerconfigs)
-                       for more information.
-`--topic`: Name of the Kafka topic to send the messages to.
-`--filename`: Path to the CSV file to be sent.
+`--bootstrap-servers` A list of host/port pairs to connect to Kafka.
+    See [the Kafka documentation](https://kafka.apache.org/documentation#producerconfigs)
+    for more information.
+
+`--topic` Name of the Kafka topic to send the messages to.
+
+`--filename` Path to the CSV file to be sent.
 
 ## Examples
 
