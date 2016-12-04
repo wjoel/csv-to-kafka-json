@@ -21,6 +21,6 @@
   (let [mock-producer (MockProducer. true (StringSerializer.) (StringSerializer.))]
     (is (= test-jsons
            (do
-             (send-csv-to-kafka! mock-producer test-csv)
+             (send-csv-to-kafka! mock-producer "test" test-csv)
              (->> (.history mock-producer)
                   (map #(.value %))))))))
