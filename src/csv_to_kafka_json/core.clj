@@ -26,7 +26,7 @@
   (let [{:keys [options errors summary]} (parse-opts args arguments/cli-options)]
     (cond
       (:help options) (arguments/print-usage summary errors)
-      errors (throw (IllegalArgumentException. (print-usage summary errors)))
+      errors (throw (IllegalArgumentException. (arguments/print-usage summary errors)))
       :default (let [{:keys [bootstrap-servers topic filename]} options
                      kafka-producer (kc/producer {:bootstrap.servers bootstrap-servers}
                                                  (kc/string-serializer)
