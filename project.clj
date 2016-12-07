@@ -1,4 +1,4 @@
-(defproject csv-to-kafka-json "0.1.0"
+(defproject csv-to-kafka-json "0.1.1-SNAPSHOT"
   :description "Sends CSV files to Kafka as JSON encoded messages"
   :url "http://github.com/wjoel/csv-to-kafka-json"
   :license {:name "MIT License"
